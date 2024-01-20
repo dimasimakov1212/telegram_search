@@ -1,5 +1,3 @@
-from pathlib import Path
-
 from telethon import TelegramClient
 from telethon.errors import SessionPasswordNeededError
 from telethon.sync import TelegramClient
@@ -12,7 +10,7 @@ load_dotenv('.env')
 
 api_id = os.getenv('TELEGRAM_API_ID')
 api_hash = os.getenv('TELEGRAM_API_HASH')
-key_word = 'получить кредит'
+key_word = 'котики и фотики'
 
 # Создаем клиент Telegram
 client = TelegramClient('session_name', api_id, api_hash)
@@ -27,12 +25,20 @@ async def get_channels_by_keyword():
         limit=15
     ))  # Можете увеличить или уменьшить лимит
 
+    # Получаем диалоги пользователя
+    # dialogs = await client.get_dialogs(limit=2)
+    # print(dialogs)
+
+    # Фильтруем диалоги по ключевому слову
+    # result = [dialog.entity for dialog in dialogs if ключевое_слово.lower() in dialog.name.lower()]
+
     # print(result.stringify())
     chat_list = result.chats
     print(len(chat_list))
 
     for chat in chat_list:
-        print(f"ID канала: {chat.id}, Название: {chat.title}")
+        chat_link = f"https://t.me/{chat.username}"
+        print(f"ID канала: {chat.id}, Название: {chat.title}, Ссылка на канал: {chat_link}")
 
     # Выводим информацию о найденных каналах
     # for entity in result:
