@@ -1,12 +1,18 @@
+from pathlib import Path
+
 from telethon import TelegramClient
 from telethon.errors import SessionPasswordNeededError
 from telethon.sync import TelegramClient
 from telethon import functions, types
 import asyncio
+from dotenv import load_dotenv
+import os
 
-api_id = 20405697
-api_hash = '5555654ace82febc37162f1ae2b5b59e'
-key_word = 'создание сайтов'
+load_dotenv('.env')
+
+api_id = os.getenv('TELEGRAM_API_ID')
+api_hash = os.getenv('TELEGRAM_API_HASH')
+key_word = 'получить кредит'
 
 # Создаем клиент Telegram
 client = TelegramClient('session_name', api_id, api_hash)
@@ -18,7 +24,7 @@ async def get_channels_by_keyword():
     # Ищем каналы по ключевому слову
     result = await client(functions.contacts.SearchRequest(
         q=key_word,
-        limit=5
+        limit=15
     ))  # Можете увеличить или уменьшить лимит
 
     # print(result.stringify())
