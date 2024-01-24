@@ -12,7 +12,8 @@ load_dotenv('.env')
 
 api_id = os.getenv('TELEGRAM_API_ID')  # получаем api_id, полученный у Telegram
 api_hash = os.getenv('TELEGRAM_API_HASH')  # получаем api_hash, полученный у Telegram
-key_word = 'котики и фотики'
+key_word = 'гуриеномика'
+file_data = os.path.abspath('./channels.json')  # файл для хранения списка вакансий
 
 # Создаем клиент Telegram
 client = TelegramClient('session_name', api_id, api_hash)
@@ -42,7 +43,7 @@ async def get_channels_by_keyword():
 
     # получаем список каналов из файла хранения
     # если файла еще не существует, будет создан пустой список
-    channels_list = reading_json
+    channels_list = reading_json(file_data)
 
     # перебираем список каналов
     for chat in chat_list:
@@ -58,8 +59,8 @@ async def get_channels_by_keyword():
 
         channels_list.append(channel_dict)
 
-    writing_json(channels_list)
-    # print(channels_list)
+    writing_json(file_data, channels_list)
+    print(channels_list)
 
     # Выводим информацию о найденных каналах
     # for entity in result:
