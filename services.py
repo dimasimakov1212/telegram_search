@@ -1,6 +1,8 @@
 import json
+from random import randint
 
 # file_data = os.path.abspath('./channels.json')  # файл для хранения списка вакансий
+# key_words = ['биржа', 'фриланс', 'заказ', 'сайт', 'реклама', 'удаленно', 'сделать']
 
 
 def writing_json(file_data, channels_list):
@@ -18,6 +20,27 @@ def reading_json(file_data):
             channels = json.load(file)
         return channels
     except FileNotFoundError:
-        print('Такого файла не существует, будет создан новый файл')
+        print('Файла пока не существует, будет создан новый файл')
         channels = []
         return channels
+
+
+def number_generator(list_len):
+    """ Генератор случайного числа, исходя из списка ключевых слов """
+
+    number = int(randint(0, list_len))
+
+    return number
+
+
+def get_key_phrase(words_list):
+    """ Формирует ключевую фразу для поиска """
+
+    words_list_len = int(len(words_list) - 1)  # определяем количество слов
+
+    word_number_1 = number_generator(words_list_len)  # получаем случайный номер первого слова
+    word_number_2 = number_generator(words_list_len)  # получаем случайный номер второго слова
+
+    key_phrase = str(f"{words_list[word_number_1]} {words_list[word_number_2]}")
+
+    return key_phrase
