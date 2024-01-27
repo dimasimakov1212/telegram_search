@@ -9,14 +9,15 @@ from services import reading_json
 
 def get_channels():
     """ Функция поиска каналов """
+
     channels_list = reading_json(file_data)  # получаем список каналов из файла хранения
     len_channels_list_start = len(channels_list)  # определяем начальное количество каналов
 
-    loop = asyncio.get_event_loop()
+    loop = asyncio.get_event_loop()  # получаем текущий цикл событий
 
     # запускаем цикл поиска каналов, количество итераций можно изменить
     for i in range(2):
-        loop.run_until_complete(get_channels_by_keyword())
+        loop.run_until_complete(get_channels_by_keyword())  # запускаем цикл событий
         time.sleep(20)
 
     channels_list = reading_json(file_data)  # получаем список каналов из файла хранения

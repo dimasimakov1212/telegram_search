@@ -1,9 +1,6 @@
 import json
 from random import randint
 
-# file_data = os.path.abspath('./channels.json')  # файл для хранения списка вакансий
-# key_words = ['биржа', 'фриланс', 'заказ', 'сайт', 'реклама', 'удаленно', 'сделать']
-
 
 def writing_json(file_data, channels_list):
     """ Записывает данные в формате json """
