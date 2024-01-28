@@ -3,6 +3,12 @@ from random import randint
 import pytz
 import datetime
 
+# from channels import file_data_json
+import os
+
+stop_words = ['oriflame', 'спецтехники', 'отзывов', 'клипы', 'wildberries', 'исламский']
+file_data_json = os.path.abspath('./channels.json')  # файл для хранения списка вакансий
+
 
 def writing_json(file_data, channels_list):
     """ Записывает данные в формате json """
@@ -58,3 +64,31 @@ def get_days_difference(date_time):
     days_difference = (time_now.date() - time_received.date()).days
 
     return days_difference
+
+
+def cleaning_data(file_data, words_list):
+    """ Очистка файла с данными о каналах по списку стоп-слов """
+
+    channels_list = reading_json(file_data)  # получаем список каналов из файла хранения
+    len_channels_list_start = len(channels_list)  # определяем начальное количество каналов
+    print(f"Начальное количество каналов: {len_channels_list_start}")
+
+    channels_list_new = []  # создаем пустой список
+
+    for channel in channels_list:  # проверяем каналы
+
+        for word in words_list:  # проверяем наличие в названии канала стоп-слов
+            if word.lower() not in channel['title'].lower().split():  # если стоп-слова нет в названии канала
+                if channel not in channels_list_new:  # если канала нет в новом списке
+                    channels_list_new.append(channel)  # добавляем канал в новый список
+
+    len_channels_list_end = len(channels_list_new)  # определяем конечное количество каналов
+    len_difference = len_channels_list_start - len_channels_list_end  # определяем количество удаленных каналов
+
+    print(f"Удалено каналов: {len_difference}")
+    print(f"Осталось каналов в файле: {len_channels_list_end}")
+
+    writing_json(file_data, channels_list_new)  # сохраняем новый список каналов в файл в формате json
+
+
+cleaning_data(file_data_json, stop_words)
