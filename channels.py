@@ -1,5 +1,5 @@
 from telethon.sync import TelegramClient
-from telethon import functions, types
+from telethon import functions
 from dotenv import load_dotenv
 import os
 
