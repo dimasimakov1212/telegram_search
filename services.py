@@ -1,5 +1,7 @@
 import json
 from random import randint
+import pytz
+import datetime
 
 
 def writing_json(file_data, channels_list):
@@ -41,3 +43,18 @@ def get_key_phrase(words_list):
     key_phrase = str(f"{words_list[word_number_1]} {words_list[word_number_2]}")
 
     return key_phrase
+
+
+def get_days_difference(date_time):
+    """ Считает разницу между текущей датой и полученной датой в днях """
+
+    desired_timezone = pytz.timezone('Europe/Moscow')  # устанавливаем часовой пояс
+    date_time_now = datetime.datetime.now()  # получаем текущие дату и время
+
+    time_now = date_time_now.astimezone(desired_timezone)  # текущее время с учетом часового пояса
+    time_received = date_time.astimezone(desired_timezone)  # время полученное с учетом часового пояса
+
+    # считаем разницу между текущей датой и полученной датой в днях
+    days_difference = (time_now.date() - time_received.date()).days
+
+    return days_difference
