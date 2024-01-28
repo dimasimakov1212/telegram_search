@@ -3,7 +3,8 @@ from telethon import functions, types
 import asyncio
 import time
 
-from channels import get_channels_by_keyword, file_data_json
+from channels import get_channels_by_keyword
+from datas import file_data_json
 from services import reading_json
 
 
