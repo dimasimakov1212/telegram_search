@@ -3,6 +3,7 @@ from telethon import functions
 from dotenv import load_dotenv
 import os
 
+from datas import key_words, stop_words, file_data_json
 from services import writing_json, reading_json, get_key_phrase, get_days_difference
 
 load_dotenv('.env')  # загружаем данные из виртуального окружения
@@ -10,14 +11,6 @@ load_dotenv('.env')  # загружаем данные из виртуально
 api_id = os.getenv('TELEGRAM_API_ID')  # получаем api_id, полученный у Telegram
 api_hash = os.getenv('TELEGRAM_API_HASH')  # получаем api_hash, полученный у Telegram
 key_word = 'gurienomika'
-
-# список ключевых слов из которых будет составлена ключевая фраза
-key_words = ['биржа', 'фриланс', 'заказ', 'сайт', 'реклама', 'удаленно', 'сделать']
-
-# список слов, при наличии которых в названии канала, канал не будет добавлен
-stop_words = ['oriflame', 'спецтехники', 'отзывов', 'клипы', 'wildberries', 'исламский']
-
-file_data_json = os.path.abspath('./channels.json')  # файл для хранения списка вакансий
 
 # Создаем клиент Telegram
 client = TelegramClient('session_name', api_id, api_hash)

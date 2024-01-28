@@ -3,11 +3,7 @@ from random import randint
 import pytz
 import datetime
 
-# from channels import file_data_json
-import os
-
-stop_words = ['oriflame', 'спецтехники', 'отзывов', 'клипы', 'wildberries', 'исламский']
-file_data_json = os.path.abspath('./channels.json')  # файл для хранения списка вакансий
+from datas import file_data_json, stop_words
 
 
 def writing_json(file_data, channels_list):
@@ -77,10 +73,16 @@ def cleaning_data(file_data, words_list):
 
     for channel in channels_list:  # проверяем каналы
 
+        flag = True  # устанавливаем метку добавления канала в новый список
+
         for word in words_list:  # проверяем наличие в названии канала стоп-слов
-            if word.lower() not in channel['title'].lower().split():  # если стоп-слова нет в названии канала
-                if channel not in channels_list_new:  # если канала нет в новом списке
-                    channels_list_new.append(channel)  # добавляем канал в новый список
+
+            if word.lower() in channel['title'].lower().split():  # если стоп-слово есть в названии канала
+                flag = False  # устанавливаем запрет на добавление канала
+
+        if flag:
+            if channel not in channels_list_new:  # если канала нет в новом списке
+                channels_list_new.append(channel)  # добавляем канал в новый список
 
     len_channels_list_end = len(channels_list_new)  # определяем конечное количество каналов
     len_difference = len_channels_list_start - len_channels_list_end  # определяем количество удаленных каналов
