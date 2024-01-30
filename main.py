@@ -14,7 +14,9 @@ def get_channels():
     channels_list = reading_json(file_data_json)  # получаем список каналов из файла хранения
     len_channels_list_start = len(channels_list)  # определяем начальное количество каналов
 
-    loop = asyncio.get_event_loop()  # получаем текущий цикл событий
+    # loop = asyncio.get_event_loop()  # получаем текущий цикл событий
+    loop = asyncio.new_event_loop()  # создаем новый цикл событий
+    asyncio.set_event_loop(loop)  # устанавливаем цикл событий
 
     # запускаем цикл поиска каналов, количество итераций можно изменить
     for i in range(2):
@@ -29,6 +31,8 @@ def get_channels():
 
     print(f"Добавлено {len_difference} новых каналов")
     print(f"Всего каналов в файле: {len_channels_list_end}")
+
+    return len_difference
 
 
 if __name__ == '__main__':
