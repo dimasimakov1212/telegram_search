@@ -10,6 +10,7 @@ python = "^3.11"
 telethon = "^1.33.1"
 python-dotenv = "^1.0.0"
 pytz = "^2023.3.post1"
+pytelegrambotapi = "^4.15.3"
 
 
 [build-system]
