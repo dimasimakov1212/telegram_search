@@ -80,7 +80,7 @@ def cleaning_data(file_data, words_list):
             if word.lower() in channel['title'].lower().split():  # если стоп-слово есть в названии канала
                 flag = False  # устанавливаем запрет на добавление канала
 
-        if flag:
+        if flag:  # если метка разрешает добавление канала
             if channel not in channels_list_new:  # если канала нет в новом списке
                 channels_list_new.append(channel)  # добавляем канал в новый список
 

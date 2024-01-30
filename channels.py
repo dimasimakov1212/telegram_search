@@ -51,22 +51,26 @@ async def get_channels_by_keyword():
         channel_dict['title'] = chat.title  # название канала
         channel_dict['link'] = chat_link  # ссылка на канал
 
+        flag = True  # устанавливаем метку добавления канала в новый список
+
         for word in stop_words:  # проверяем наличие в названии канала стоп-слов
+            if word.lower() in chat.title.lower().split():  # если стоп-слово есть в названии канала
+                flag = False  # устанавливаем запрет на добавление канала
 
-            if word.lower() not in chat.title.lower().split():  # если стоп-слова нет в названии канала
+        if flag:  # если метка разрешает добавление канала
 
-                # проверяем последнее сообщение в канале
-                async for message in client.iter_messages(chat.title, limit=1):
-                    # print(message.date)
+            # проверяем последнее сообщение в канале
+            async for message in client.iter_messages(chat.title, limit=1):
+                # print(message.date)
 
-                    # определяем давность последнего сообщения в днях от текущей даты
-                    days_difference = get_days_difference(message.date)
+                # определяем давность последнего сообщения в днях от текущей даты
+                days_difference = get_days_difference(message.date)
 
-                    # проверяем давность сообщения (чтобы сообщение было опубликовано не позднее 7 дней)
-                    if days_difference <= 7:
+                # проверяем давность сообщения (чтобы сообщение было опубликовано не позднее 7 дней)
+                if days_difference <= 7:
 
-                        if channel_dict not in channels_list:  # если канала нет в списке, добавляем в список
-                            channels_list.append(channel_dict)
+                    if channel_dict not in channels_list:  # если канала нет в списке, добавляем в список
+                        channels_list.append(channel_dict)
 
     writing_json(file_data_json, channels_list)  # сохраняем список каналов в файл в формате json
 
