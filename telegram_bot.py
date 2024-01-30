@@ -4,6 +4,8 @@ import telebot
 from telebot import types
 from dotenv import load_dotenv
 
+from main import get_channels
+
 load_dotenv('.env')  # загружаем данные из виртуального окружения
 
 bot_token = os.getenv('TELEGRAM_ACCESS_TOKEN')  # получаем токен бота
@@ -28,11 +30,20 @@ def start_bot(massage):
 def bot_massage(massage):
     """ Функция работы меню бота """
 
+    # если в меню бота нажать кнопку "Инфо"
     if massage.text == 'Инфо':
+        # отправляется сообщение с ником пользователя
         bot.send_message(massage.chat.id, 'Твой ник: @{0.username}'.format(massage.from_user))
 
+    # если в меню бота нажать кнопку "Старт"
     elif massage.text == 'Старт':
-        bot.send_message(massage.chat.id, 'Привет, {0.first_name}!'.format(massage.from_user))
+        bot.send_message(massage.chat.id, 'Ожидайте, идет поиск...')
+
+        # запускается поиск Telegram каналов
+        new_channels = get_channels()
+
+        bot.send_message(massage.chat.id, f'Найдено {new_channels} новых каналов')
+        # bot.send_message(massage.chat.id, 'Привет, {0.first_name}!'.format(massage.from_user))
 
 
 bot.polling(non_stop=True)  # команда, чтобы бот не отключался
